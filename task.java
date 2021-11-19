@@ -35,22 +35,5 @@ public class Task {
 		return generator.nextGaussian() * deviation + mean;//gaussian returns a normally distributed random number with deviation of 1 and mean of 0, so we can add the desired mean and multiply to get the deviation
 	}
 
-	LinkedList<Task> createFries(int orderID) {
-		LinkedList<Task> fries = new LinkedList<>();
-		fries.push(new Task("Cook", false, true, orderID, 10, 1, "Plating fries"));
-		fries.push(new Task("Cook", true, false, orderID, 3, 1, "Removing fries from deep fryer"));
-		fries.push(new Task("Deep Fryer", false, false, orderID, 120, 1, "Fries deep frying"));
-		fries.push(new Task("Cook", false, false, orderID, 10, 1, "Adding fries to deep fryer"));
-		return fries;
-	}
 
-	LinkedList<Task> createNacho(int orderID) {
-		LinkedList<Task> nachos = new LinkedList<>();
-		nachos.push(new Task("Cook", false, true, orderID, 10, 1, "Plating nachos"));
-		nachos.push(new Task("Cook", true, false, orderID, 5, 1, "Removing nachos from oven"));
-		nachos.push(new Task("Deep Fryer", false, false, orderID, 50, 1, "Natchos cooking"));
-		nachos.push(new Task("Cook", false, false, orderID, 5, 1, "Adding nachos to oven"));
-		nachos.push(new Task("Cook", false, true, orderID, 120, 1, "Preparing nachos"));
-		return nachos;
-	}
 }
