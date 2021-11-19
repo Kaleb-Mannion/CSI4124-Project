@@ -44,13 +44,13 @@ public class Task {
 		return fries;
 	}
 
-	LinkedList<Task> createNatcho(int orderID) {
-		LinkedList<Task> natchos = new LinkedList<>();
-		natchos.push(new Task("Cook", false, true, orderID, 10, 1, "Plating natchos"));
-		natchos.push(new Task("Cook", true, false, orderID, 5, 1, "Removing natchos from oven"));
-		natchos.push(new Task("Deep Fryer", false, false, orderID, 50, 1, "Natchos cooking"));
-		natchos.push(new Task("Cook", false, false, orderID, 5, 1, "Adding natchos to oven"));
-		natchos.push(new Task("Cook", false, true, orderID, 120, 1, "Preparing natchos"));
-		return natchos;
+	LinkedList<Task> createNacho(int orderID) {
+		LinkedList<Task> nachos = new LinkedList<>();
+		nachos.push(new Task("Cook", false, true, orderID, 10, 1, "Plating nachos"));
+		nachos.push(new Task("Cook", true, false, orderID, 5, 1, "Removing nachos from oven"));
+		nachos.push(new Task("Deep Fryer", false, false, orderID, 50, 1, "Natchos cooking"));
+		nachos.push(new Task("Cook", false, false, orderID, 5, 1, "Adding nachos to oven"));
+		nachos.push(new Task("Cook", false, true, orderID, 120, 1, "Preparing nachos"));
+		return nachos;
 	}
 }
