@@ -31,9 +31,9 @@ public class Cook
 
     
     /* Get methods */ 
-    public boolean setDeepFrier() { return deepFrier;  }
-    public boolean setCookTop() { return cookTop;  }
-    public boolean setOven() { return oven;  }
+    public boolean getDeepFrier() { return deepFrier;  }
+    public boolean getCookTop() { return cookTop;  }
+    public boolean getOven() { return oven;  }
 
     /* Setter Methods */ 
     public void setDeepFrier(boolean value) { deepFrier = value;  }
