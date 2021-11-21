@@ -34,7 +34,6 @@ public class Cook{
 		while(i.hasNext()){//as interrupts have priority we search for any new ones and deal with them
 			task currentTask = i.next();
 			if(currentTask.isInterrupt){//if the current task is an interrupt
-				System.out.println("INTERRUPTED");
 				currentTime = doTask(currentTask,futureTaskList, currentTime);//deal with the interrupt
 				taskList.remove(currentTask);//remove it from the task list
 				return currentTime;//update the time
