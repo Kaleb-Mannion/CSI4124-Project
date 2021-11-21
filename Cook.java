@@ -75,13 +75,13 @@ public class Cook{
 
 	double doTask(task currentTask, LinkedList<task> futureTaskList, double currentTime){//updates the available resource pools and advances time for uninterruptable tasks
 		double timeLength = currentTask.generateCompletionTime(currentTime);//determine when the task will end
-		System.out.println("Starting Order #" + Integer.toString(currentTask.orderID) + " : " + currentTask.description);
+		System.out.println(Double.toString(currentTime) + "s : Starting Order #" + Integer.toString(currentTask.orderID) + " : " + currentTask.description);
 		task futureEvent = currentTask.nextTask;//get the task that occurs after this one completes
 		if(futureEvent != null){//if there is a task after this one
 			futureEvent.arrivalTime = currentTask.completionTime;//set the task that occurs after this one completes to arrive when this one completes
 			futureTaskList.add(futureEvent);//add the future task to the future task list
 		}else{//otherwise
-			System.out.println("Finished Order #" + Integer.toString(currentTask.orderID));//display order completion
+			System.out.println(Double.toString(currentTime) + "s : Finished Order #" + Integer.toString(currentTask.orderID));//display order completion
 		}
 		if(currentTask.resource == null){
 			//raise an error about missing resource?
