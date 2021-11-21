@@ -54,7 +54,16 @@ public class main {
 		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating fries");
 		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing fries from deep fryer");
 		task frying = new task("Fryer", false, true, true, orderID,  120, 1, removing,"Fries deep frying");
-		task fries = new task("Cook", false, false, false, orderID, 10, 1, arrivalTime, frying,"Adding fries to deep fryer");
+		task fries = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime, frying,"Adding fries to deep fryer");
 		return fries;
+	}
+	
+	task createNatcho(int orderID){
+		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating natchos");
+		task removing = new task("Cook", true, false, false, orderID, 5, 1, plating,"Removing natchos from oven");
+		task cooking = new task("Oven", false, true, true, orderID,  50, 1, removing,"Natchos cooking");
+		task adding = new task("Cook", false, true, true, orderID, 5, 1, cooking,"Adding natchos to oven");
+		task preparing = new task("Cook", false, true, false, orderID, 120, 1, adding,"Preparing natchos");
+		return preparing;
 	}
 }
