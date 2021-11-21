@@ -58,7 +58,7 @@ public class main {
 		return fries;
 	}
 	
-	task createNatcho(int orderID){
+	static task createNatcho(int orderID){
 		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating natchos");
 		task removing = new task("Cook", true, false, false, orderID, 5, 1, plating,"Removing natchos from oven");
 		task cooking = new task("Oven", false, true, true, orderID,  50, 1, removing,"Natchos cooking");
