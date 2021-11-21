@@ -53,7 +53,7 @@ public class main {
 	static task createFries(int orderID, double arrivalTime){
 		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating fries");
 		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing fries from deep fryer");
-		task frying = new task("Fryer", false, true, true, orderID,  120, 1, plating,"Fries deep frying");
+		task frying = new task("Fryer", false, true, true, orderID,  120, 1, removing,"Fries deep frying");
 		task fries = new task("Cook", false, false, false, orderID, 10, 1, arrivalTime, frying,"Adding fries to deep fryer");
 		return fries;
 	}
