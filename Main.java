@@ -2,11 +2,6 @@ import java.util.*;
 import java.io.*;
 
 public class main {
-
-    //static Queue serviceQueue = new LinkedList<>();
-    //static ArrayList<Cook> cookList = new ArrayList<>();
-
-
     public static void main(String[] args) {
 		LinkedList<task> taskList = new LinkedList<task>();//keep a list of all the current tasks
 		LinkedList<task> futureTaskList = new LinkedList<task>();//keep a list off all the future tasks
@@ -53,27 +48,12 @@ public class main {
 			//	return;
 			//}
 		}
-        // Runs until list is depleted
-        /*while (!serviceQueue.isEmpty()){
-
-            // removes head of queue (represents customer being "serviced")
-            //Customer current = serviceQueue.poll();
-
-            // checks to see if the recent customer removal produces an empty queue
-            if (!serviceQueue.isEmpty()) {
-
-                //informs the head of the queue of the customer currently being serviced to calculate wait time.
-                //serviceQueue.peek().setFrontCustomer(current);
-                //serviceQueue.peek().calculateWaitTime();
-
-            }
-        }*/
     }
 
 	static task createFries(int orderID, double arrivalTime){
 		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating fries");
 		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing fries from deep fryer");
-		task frying = new task("Fryer", false, false, true, orderID,  120, 1, plating,"Fries deep frying");
+		task frying = new task("Fryer", false, true, true, orderID,  120, 1, plating,"Fries deep frying");
 		task fries = new task("Cook", false, false, false, orderID, 10, 1, arrivalTime, frying,"Adding fries to deep fryer");
 		return fries;
 	}
