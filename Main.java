@@ -49,6 +49,8 @@ public class main {
 			//}
 		}
     }
+	
+	// Appetizers
 
 	static task createFries(int orderID, double arrivalTime){
 		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating fries");
@@ -58,12 +60,130 @@ public class main {
 		return fries;
 	}
 	
-	static task createNatcho(int orderID){
+	static task createSweetPotatoFries(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating sweet potato fries");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing sweet potato fries from deep fryer");
+		task frying = new task("Fryer", false, true, true, orderID,  180, 1, removing,"Sweet potato fries deep frying");
+		task fries = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime, frying,"Adding sweet potato fries to deep fryer");
+		return fries;
+	}
+	
+	static task createWaffleFries(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating waffle fries");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing waffle fries from deep fryer");
+		task frying = new task("Fryer", false, true, true, orderID,  180, 1, removing,"Sweet waffle fries deep frying");
+		task fries = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime, frying,"Adding waffle fries to deep fryer");
+		return fries;
+	}
+	
+	static task createKettleChips(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating kettle chips");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing kettle chips from deep fryer");
+		task frying = new task("Fryer", false, true, true, orderID,  180, 1, removing,"Kettle chips deep frying");
+		task chips = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime, frying,"Adding kettle chips to deep fryer");
+		return chips;
+	}
+	
+	static task createJalapenoTaters(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating jalapeno taters");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing jalapeno taters from deep fryer");
+		task frying = new task("Fryer", false, true, true, orderID,  180, 1, removing,"Jalapeno taters deep frying");
+		task taters = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime, frying,"Adding jalapeno taters to deep fryer");
+		return taters;
+	}
+	
+	static task createDeepFriedCurds(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating deep fried cheese curds");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing deep fried cheese curds from deep fryer");
+		task frying = new task("Fryer", false, true, true, orderID,  60, 1, removing,"Deep fried cheese curds deep frying");
+		task curds = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime, frying,"Adding deep fried cheese curds to deep fryer");
+		return curds;
+	}
+	
+	static task createWings(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating wings");
+		task flavoring = new task("Cook", false, true, true, orderID, 10, 1, plating,"Seasoning wings");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, flavoring,"Removing wings from deep fryer");
+		task frying = new task("Fryer", false, true, true, orderID,  9*60, 1, removing,"Wings deep frying");
+		task wings = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime, frying,"Adding wings to deep fryer");
+		return wings;
+	}
+	
+	static task createPizzaFingers(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating pizza fingers");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing pizza fingers");
+		task frying = new task("Fryer", false, true, true, orderID,  9*60, 1, removing,"Pizza fingers deep frying");
+		task fingers = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime, frying,"Adding pizza fingers to deep fryer");
+		return fingers;
+	}
+	
+	static task createChickenTenders(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating chicken tenders");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing chicken tenders");
+		task frying = new task("Fryer", false, true, true, orderID,  7*60, 1, removing,"Chicken tenders deep frying");
+		task tenders = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime, frying,"Adding chicken tenders to deep fryer");
+		return tenders;
+	}
+	
+	//Natchos (don't distinguish between small and large and different types, all take ~ same amount of time)
+	
+	static task createNatcho(int orderID, double arrivalTime){
 		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating natchos");
 		task removing = new task("Cook", true, false, false, orderID, 5, 1, plating,"Removing natchos from oven");
 		task cooking = new task("Oven", false, true, true, orderID,  50, 1, removing,"Natchos cooking");
 		task adding = new task("Cook", false, true, true, orderID, 5, 1, cooking,"Adding natchos to oven");
-		task preparing = new task("Cook", false, true, false, orderID, 120, 1, adding,"Preparing natchos");
+		task preparing = new task("Cook", false, true, false, orderID, 120, 1,arrivalTime, adding,"Preparing natchos");
 		return preparing;
 	}
+	
+	//Pizza
+	
+	static task createCheesePizza(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 30, 1, null,"Plating cheese pizza");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing cheese pizza");
+		task cooking = new task("Oven", false, true, true, orderID,  3*60, 1, removing,"Cooking cheese pizza");
+		task adding = new task("Cook", false, true, true, orderID,  5, 1, cooking,"Putting cheese pizza in oven");
+		task pizza = new task("Cook", false, true, false, orderID, 3*60, 3, arrivalTime, adding,"Preparing cheese pizza");
+		return pizza;
+	}
+	
+	static task createPeperoniPizza(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 30, 1, null,"Plating peperoni pizza");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing peperoni pizza");
+		task cooking = new task("Oven", false, true, true, orderID,  3*60, 1, removing,"Cooking peperoni pizza");
+		task adding = new task("Cook", false, true, true, orderID,  5, 1, cooking,"Putting peperoni pizza in oven");
+		task pizza = new task("Cook", false, true, false, orderID, 4*60, 3, arrivalTime, adding,"Preparing peperoni pizza");
+		return pizza;
+	}
+	
+	static task createHousePizza(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 30, 1, null,"Plating house pizza");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing house pizza");
+		task cooking = new task("Oven", false, true, true, orderID,  3*60, 1, removing,"Cooking house pizza");
+		task adding = new task("Cook", false, true, true, orderID,  5, 1, cooking,"Putting house pizza in oven");
+		task pizza = new task("Cook", false, true, false, orderID, 4.5*60, 3, arrivalTime, adding,"Preparing house pizza");
+		return pizza;
+	}
+	
+	static task createBBQPizza(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 30, 1, null,"Plating BBQ pizza");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing BBQ pizza");
+		task cooking = new task("Oven", false, true, true, orderID,  3*60, 1, removing,"Cooking BBQ pizza");
+		task adding = new task("Cook", false, true, true, orderID,  5, 1, cooking,"Putting BBQ pizza in oven");
+		task pizza = new task("Cook", false, true, false, orderID, 4.5*60, 3, arrivalTime, adding,"Preparing BBQ pizza");
+		return pizza;
+	}
+	
+	static task createCanadianPizza(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 30, 1, null,"Plating canadian pizza");
+		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing canadian pizza");
+		task cooking = new task("Oven", false, true, true, orderID,  3*60, 1, removing,"Cooking canadian pizza");
+		task adding = new task("Cook", false, true, true, orderID,  5, 1, cooking,"Putting canadian pizza in oven");
+		task pizza = new task("Cook", false, true, false, orderID, 4.5*60, 3, arrivalTime, adding,"Preparing canadian pizza");
+		return pizza;
+	}
+	
+	//Burgers
+	
+	
 }
