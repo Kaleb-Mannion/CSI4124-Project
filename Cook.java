@@ -93,7 +93,7 @@ public class Cook{
 			}else if(currentTask.resource == "Cook Top"){
 				noCookTops--;
 			}else if(currentTask.resource == "Cook"){
-				isBusy = true;
+				//isBusy = true;
 			}			
 			futureResourceList.add(new resource(currentTask.resource, currentTask.completionTime));//when a resource is done being used, schedule it to return to the pool of available resources
 		} 
