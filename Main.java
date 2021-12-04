@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.Random;
 import java.lang.Math;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
 		LinkedList<task> taskList = new LinkedList<task>();//keep a list of all the current tasks
 		LinkedList<task> futureTaskList = new LinkedList<task>();//keep a list off all the future tasks
@@ -71,7 +71,7 @@ public class main {
 				}
 			}
 			currentTime = cook.nextEvent(taskList, futureTaskList, currentTime);//have the cook check if the advancement of time has allowed them to work on a new task
-			//System.out.println("Ovens" + cook.noOvens + " Cook Tops" + cook.noCookTops + "Fryers" + cook.noFryers + " Cook?" + cook.isBusy);
+			System.out.println("Ovens" + cook.noOvens + " Cook Tops" + cook.noCookTops + "Fryers" + cook.noFryers + " Cook?" + cook.isBusy);
 		}
     }
 	
