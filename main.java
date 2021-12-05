@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.Random;
 import java.lang.Math;
 
-public class Main {
+public class main {
     public static void main(String[] args) {
 		LinkedList<task> taskList = new LinkedList<task>();//keep a list of all the current tasks
 		LinkedList<task> futureTaskList = new LinkedList<task>();//keep a list off all the future tasks
@@ -71,7 +71,7 @@ public class Main {
 				}
 			}
 			currentTime = cook.nextEvent(taskList, futureTaskList, currentTime);//have the cook check if the advancement of time has allowed them to work on a new task
-			System.out.println("Ovens" + cook.noOvens + " Cook Tops" + cook.noCookTops + "Fryers" + cook.noFryers + " Cook?" + cook.isBusy);
+			//System.out.println("Ovens" + cook.noOvens + " Cook Tops" + cook.noCookTops + "Fryers" + cook.noFryers + " Cook?" + cook.isBusy);
 		}
     }
 	
@@ -82,8 +82,6 @@ public class Main {
 	static double natchoChance = 0.125;
 	static double saladChance = 0.05;
 	static double kidsMealChance = 0.1;
-	static double meanItems = 2;
-	static double itemDeviation = 1;
 	
 	static task[] createOrder(int orderID, double arrivalTime){
 		Random generator = new Random();
