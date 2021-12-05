@@ -41,6 +41,17 @@ public class Cook{
 		}
 		ListIterator<resource> j = futureResourceList.listIterator(0);//iterator for the tools in use
 		LinkedList<resource> freedResources = new LinkedList<>();
+		if(futureTaskList.isEmpty()){
+			resource soonestResource = null;
+			while(j.hasNext()){
+				resource resourceInUse = j.next();
+				if(soonestResource == null || resourceInUse.arrivalTime < soonestResource.arrivalTime){
+					soonestResource = resourceInUse;
+				}
+			}
+			currentTime = soonestResource.arrivalTime;
+		}
+		j = futureResourceList.listIterator(0);//iterator for the tools in use
 		while(j.hasNext()){//after all the interrupts have been cleared, we can guarantee the resources they were using are no free, so we add the freed resources
 			resource resourceInUse = j.next();
 			if(resourceInUse.arrivalTime <= currentTime){//if the resource was freed in the past or now
@@ -93,7 +104,7 @@ public class Cook{
 			}else if(currentTask.resource == "Cook Top"){
 				noCookTops--;
 			}else if(currentTask.resource == "Cook"){
-				//isBusy = true;
+				isBusy = true;
 			}			
 			futureResourceList.add(new resource(currentTask.resource, currentTask.completionTime));//when a resource is done being used, schedule it to return to the pool of available resources
 		} 
