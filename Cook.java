@@ -8,6 +8,8 @@ public class Cook{
 	int noOvens;//number of ovens available
 	int noFryers;//number of fryers available
 	boolean isBusy;//if the cook is busy themselves
+	ArrayList<Integer> seenVariables = new ArrayList<>();
+	ArrayList<Double> orderStart = new ArrayList<>(); ArrayList<Double> orderEnd = new ArrayList<>();
 	
 	class resource{//used to keep track of when resources become available again
 		public String name;
@@ -84,15 +86,44 @@ public class Cook{
 		return currentTime;
 	}
 
+	boolean seenOrder(int orderID){
+		for (int seenID : seenVariables){
+			if (orderID == seenID){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void displayMetrics(int orderID, double endTime){
+		int index = -1;
+		for (int i = 0; i < seenVariables.size(); i++){
+			if (i == orderID){
+				orderEnd.set(i, endTime);
+				index = i;
+			}
+		}
+		System.out.println(String.format("Order # %s started at %s and ended at %s", orderID, orderStart.get(index), orderEnd.get(index)));
+	}
+
 	double doTask(task currentTask, LinkedList<task> futureTaskList, double currentTime){//updates the available resource pools and advances time for uninterruptable tasks
 		double timeLength = currentTask.generateCompletionTime(currentTime);//determine when the task will end
 		System.out.println(Double.toString(currentTime) + "s : Starting Order #" + Integer.toString(currentTask.orderID) + " : " + currentTask.description);
+
+		if (!seenOrder(currentTask.orderID)){
+			System.out.println(String.format("Starting order %s at time %s", currentTask.orderID, currentTime));
+			seenVariables.add(currentTask.orderID);
+			orderStart.add(currentTime);
+			orderEnd.add(0.0);
+		}
+
 		task futureEvent = currentTask.nextTask;//get the task that occurs after this one completes
 		if(futureEvent != null){//if there is a task after this one
 			futureEvent.arrivalTime = currentTask.completionTime;//set the task that occurs after this one completes to arrive when this one completes
 			futureTaskList.add(futureEvent);//add the future task to the future task list
 		}else{//otherwise
 			System.out.println(Double.toString(currentTime) + "s : Finished Order #" + Integer.toString(currentTask.orderID));//display order completion
+			displayMetrics(currentTask.orderID, currentTime);
 		}
 		if(currentTask.resource == null){
 			//raise an error about missing resource?

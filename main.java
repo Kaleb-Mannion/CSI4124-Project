@@ -5,6 +5,9 @@ import java.lang.Math;
 
 public class main {
     public static void main(String[] args) {
+
+
+    	//Initializations
 		LinkedList<task> taskList = new LinkedList<task>();//keep a list of all the current tasks
 		LinkedList<task> futureTaskList = new LinkedList<task>();//keep a list off all the future tasks
 		Cook cook = new Cook(4, 2, 4);//create a cook with 4 cook tops, 2 oven, 4 fryers
@@ -12,8 +15,11 @@ public class main {
 		int orderCounter = 0;
 		//generate group inter arrival times and group sizes
 		double noGroups = 50;
-		double groupArrivalTime = 0;
 		Random generator = new Random();
+
+
+		//loops through groups
+		double groupArrivalTime = 0;
 		for(int iteratorGroups = 0; iteratorGroups < noGroups; iteratorGroups++){
 			if(iteratorGroups == 0){
 				groupArrivalTime = 0;
@@ -21,6 +27,8 @@ public class main {
 				groupArrivalTime += generator.nextGaussian()*10+600;
 			}
 			int groupSize = (int)Math.log(1-generator.nextDouble())/(-1)+1;//use inverse method to generate a exponentially distributed group size, smallest group size is 1
+
+			//loops through members of group, adds items to order
 			double memberArrivalTime = groupArrivalTime;
 			for(int iteratorGroupMembers = 0; iteratorGroupMembers < groupSize; iteratorGroupMembers++){
 				if(iteratorGroupMembers == 0){
@@ -38,9 +46,11 @@ public class main {
 		System.out.println(futureTaskList.size());
 		
 		while(!taskList.isEmpty() || !futureTaskList.isEmpty()){//as long as there are future tasks or current tasks, keep working
+
 			boolean eventsSkipped = false;//keep track if any Tasks were skipped by a non interruptable task advancing time (see cook)
 			ListIterator<task> iteratorFutureTasks = futureTaskList.listIterator(0);//create an iterator for the future tasks
 			LinkedList<task> missedTasks = new LinkedList<>();//create a list of missed tasks
+
 			while(iteratorFutureTasks.hasNext()){//check if any tasks have been skipped over by an uninterruptable activity
 				task futureEvent = iteratorFutureTasks.next();
 				if(futureEvent.arrivalTime < currentTime){//if the current task occured in the past
@@ -49,20 +59,24 @@ public class main {
 					taskList.add(futureEvent);//add it to the active task list
 				}
 			}
+
 			ListIterator<task> missedIterator = missedTasks.listIterator();//iterator for the missed tasks
 			while(missedIterator.hasNext()){//iterate through the tasks that were missed
 				task missed = missedIterator.next();
 				futureTaskList.remove(missed);//remove the missed tasks from the future task list
 			}
+
 			if(!eventsSkipped){//if no events were skipped, we can advance time to the next task
 				iteratorFutureTasks = futureTaskList.listIterator(0);//create an iterator for the future tasks
 				task soonestEvent = null;//keep track of which task in the future arrives the soonest
+
 				while(iteratorFutureTasks.hasNext()){//iterate through the future tasks
 					task futureEvent = iteratorFutureTasks.next();
 					if(soonestEvent == null || soonestEvent.arrivalTime > futureEvent.arrivalTime){//if the soonest event hasnt been chosen yet, or the current event is sooner than the current soonest
 						soonestEvent = futureEvent;//replace the soonest task with the new task
 					}
 				}
+
 				if(soonestEvent != null){//if there was a next event
 					futureTaskList.remove(soonestEvent);//remove it from the future task list
 					taskList.add(soonestEvent);//add it to the current task list
