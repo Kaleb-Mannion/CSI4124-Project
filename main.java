@@ -43,7 +43,6 @@ public class main {
 				orderCounter++;
 			}
 		}
-		System.out.println(futureTaskList.size());
 		
 		while(!taskList.isEmpty() || !futureTaskList.isEmpty()){//as long as there are future tasks or current tasks, keep working
 

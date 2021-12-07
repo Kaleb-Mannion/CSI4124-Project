@@ -104,9 +104,16 @@ public class Cook{
 	}
 
 	void displayMetrics(){
+		double accumulator = 0;
 		for (int i = 0; i < seenVariables.size(); i++){
-			System.out.println(String.format("Order # %s started at %s and ended at %s", i, orderStart.get(i), orderEnd.get(i)));
+			double serviceTime = orderEnd.get(i) - orderStart.get(i);
+			System.out.println(String.format("Order # %s started at %s and ended at %s. (Service time %s)", i, orderStart.get(i), orderEnd.get(i), serviceTime));
+			accumulator += serviceTime;
 		}
+
+		double average = accumulator / seenVariables.size();
+		System.out.println(String.format("Average service time: %s", average));
+
 	}
 
 	double doTask(task currentTask, LinkedList<task> futureTaskList, double currentTime){//updates the available resource pools and advances time for uninterruptable tasks
