@@ -87,6 +87,8 @@ public class main {
 			currentTime = cook.nextEvent(taskList, futureTaskList, currentTime);//have the cook check if the advancement of time has allowed them to work on a new task
 			//System.out.println("Ovens" + cook.noOvens + " Cook Tops" + cook.noCookTops + "Fryers" + cook.noFryers + " Cook?" + cook.isBusy);
 		}
+
+		cook.displayMetrics();
     }
 	
 	//chances should sum to 1

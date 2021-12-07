@@ -95,20 +95,23 @@ public class Cook{
 		return false;
 	}
 
-	void displayMetrics(int orderID, double endTime){
-		int index = -1;
+	void updateEnd(int orderID, double endTime){
 		for (int i = 0; i < seenVariables.size(); i++){
 			if (i == orderID){
 				orderEnd.set(i, endTime);
-				index = i;
 			}
 		}
-		System.out.println(String.format("Order # %s started at %s and ended at %s", orderID, orderStart.get(index), orderEnd.get(index)));
+	}
+
+	void displayMetrics(){
+		for (int i = 0; i < seenVariables.size(); i++){
+			System.out.println(String.format("Order # %s started at %s and ended at %s", i, orderStart.get(i), orderEnd.get(i)));
+		}
 	}
 
 	double doTask(task currentTask, LinkedList<task> futureTaskList, double currentTime){//updates the available resource pools and advances time for uninterruptable tasks
 		double timeLength = currentTask.generateCompletionTime(currentTime);//determine when the task will end
-		System.out.println(Double.toString(currentTime) + "s : Starting Order #" + Integer.toString(currentTask.orderID) + " : " + currentTask.description);
+		System.out.println(Double.toString(currentTime) + "s : Starting Task for order #" + Integer.toString(currentTask.orderID) + " : " + currentTask.description);
 
 		if (!seenOrder(currentTask.orderID)){
 			System.out.println(String.format("Starting order %s at time %s", currentTask.orderID, currentTime));
@@ -122,8 +125,8 @@ public class Cook{
 			futureEvent.arrivalTime = currentTask.completionTime;//set the task that occurs after this one completes to arrive when this one completes
 			futureTaskList.add(futureEvent);//add the future task to the future task list
 		}else{//otherwise
+			updateEnd(currentTask.orderID, currentTime);
 			System.out.println(Double.toString(currentTime) + "s : Finished Order #" + Integer.toString(currentTask.orderID));//display order completion
-			displayMetrics(currentTask.orderID, currentTime);
 		}
 		if(currentTask.resource == null){
 			//raise an error about missing resource?
