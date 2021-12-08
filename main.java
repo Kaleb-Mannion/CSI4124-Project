@@ -15,6 +15,7 @@ public class main {
 		int orderCounter = 0;
 		//generate group inter arrival times and group sizes
 		double noGroups = 50;
+		double groupAcc = 0;
 		Random generator = new Random();
 
 
@@ -27,6 +28,7 @@ public class main {
 				groupArrivalTime += generator.nextGaussian()*20+2000;
 			}
 			int groupSize = (int)Math.log(1-generator.nextDouble())/(-1)+1;//use inverse method to generate a exponentially distributed group size, smallest group size is 1
+			groupAcc += groupSize;
 
 			//loops through members of group, adds items to order
 			double memberArrivalTime = groupArrivalTime;
@@ -84,7 +86,9 @@ public class main {
 			//System.out.println("Ovens" + cook.noOvens + " Cook Tops" + cook.noCookTops + "Fryers" + cook.noFryers + " Cook?" + cook.isBusy);
 		}
 
+		System.out.println(String.format("\nAverage group size is: %s", groupAcc / noGroups));
 		cook.displayMetrics();
+
     }
 	
 	//chances should sum to 1
