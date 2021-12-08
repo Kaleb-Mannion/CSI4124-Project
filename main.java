@@ -92,12 +92,11 @@ public class main {
     }
 	
 	//chances should sum to 1
-	static double appetizerChance = 0.50;
-	static double mainChance = 0.1;
-	static double pizzaChance = 0.125;
-	static double natchoChance = 0.125;
-	static double saladChance = 0.05;
-	static double kidsMealChance = 0.1;
+	static double appetizerChance = 0.35;
+	static double mainChance = 0.44;
+	static double pizzaChance = 0.06;
+	static double natchoChance = 0.13;
+	static double saladChance = 0.02;
 	
 	static task[] createOrder(int orderID, double arrivalTime){
 		Random generator = new Random();
@@ -125,7 +124,24 @@ public class main {
 					orders[item] = createWings(orderID, arrivalTime);
 				}
 			}else if(randomValue < appetizerChance + mainChance){//don't need to check if its greater than the previous chance as it would have been handled by that if statement
-				orders[item] = createWings(orderID, arrivalTime);//TEMP
+				randomValue = generator.nextDouble();
+				if(randomValue < chickenTenderChance){
+					orders[item] = createChickenTenders(orderID, arrivalTime);
+				}else if(randomValue < chickenTenderChance + beefBurgerChance){
+				    orders[item] = createBeefBurger(orderID, arrivalTime);
+				}else if(randomValue < chickenTenderChance + beefBurgerChance + crispyChickenBurgerChance){
+				    orders[item] = createCrispyChickenBurger(orderID, arrivalTime);
+				}else if(randomValue < chickenTenderChance + beefBurgerChance + crispyChickenBurgerChance + grilledChickenBurgerChance){
+				    orders[item] = createGrilledChickenBurger(orderID, arrivalTime);
+				}else if(randomValue < chickenTenderChance + beefBurgerChance + crispyChickenBurgerChance + grilledChickenBurgerChance + grilledWrapChance){
+				    orders[item] = createGrilledWrap(orderID, arrivalTime);
+				}else if(randomValue < chickenTenderChance + beefBurgerChance + crispyChickenBurgerChance + grilledChickenBurgerChance + grilledWrapChance + crispyWrapChance){
+				    orders[item] = createCrispyWrap(orderID, arrivalTime);
+				}else if(randomValue < chickenTenderChance + beefBurgerChance + crispyChickenBurgerChance + grilledChickenBurgerChance + grilledWrapChance + crispyWrapChance + hotdogChance){
+				    orders[item] = createHotdog(orderID, arrivalTime);
+				}else if(randomValue < chickenTenderChance + beefBurgerChance + crispyChickenBurgerChance + grilledChickenBurgerChance + grilledWrapChance + crispyWrapChance + hotdogChance + pogoChance){
+				    orders[item] = createPogo(orderID, arrivalTime);
+				}
 			}else if(randomValue < appetizerChance + mainChance + pizzaChance){//don't need to check if its greater than the previous chance as it would have been handled by that if statement
 				randomValue = generator.nextDouble();
 				if(randomValue < cheesePizzaChance){
@@ -143,22 +159,20 @@ public class main {
 				orders[item] = createNatcho(orderID,arrivalTime);
 			}else if(randomValue < appetizerChance + mainChance + pizzaChance + natchoChance + saladChance){//don't need to check if its greater than the previous chance as it would have been handled by that if statement
 				orders[item] = createSalad(orderID,arrivalTime);
-			}else if(randomValue < appetizerChance + mainChance + pizzaChance + natchoChance + saladChance + kidsMealChance){//don't need to check if its greater than the previous chance as it would have been handled by that if statement
-				orders[item] = createWings(orderID, arrivalTime);//TEMP
 			}
 		}
 		return orders;
 	}
 	// Appetizers
 				   
-	static double friesChance = 0.5;
-	static double sweetPotatoFriesChance = 0.5/7;
-	static double waffleFriesChance = 0.5/7;
-	static double kettleChipsChance = 0.5/7;
-	static double jalapenoTatersChance = 0.5/7;
-	static double deepFriedCurdsChance = 0.5/7;
-	static double pizzaFingersChance = 0.5/7;
-	static double createWingsChance = 0.5/7;
+	static double friesChance = 0.4857142857;
+	static double sweetPotatoFriesChance = 0.08571428571;
+	static double waffleFriesChance = 0;
+	static double kettleChipsChance = 0;
+	static double jalapenoTatersChance = 0.1142857143;
+	static double deepFriedCurdsChance = 0.02857142857;
+	static double pizzaFingersChance = 0.05714285714;
+	static double createWingsChance = 0.2285714286;
 
 	static task createFries(int orderID, double arrivalTime){
 		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating fries");
@@ -238,11 +252,11 @@ public class main {
 	
 	//Pizza
 	
-	static double cheesePizzaChance = 0.4;
-	static double peperoniPizzaChance = 0.3;
-	static double housePizzaChance = 0.1;
-	static double BBQPizzaChance = 0.1;
-	static double canadianPizzaChance = 0.1;
+	static double cheesePizzaChance = 0.333333333333333;
+	static double peperoniPizzaChance = 0.666666666666667;
+	static double housePizzaChance = 0;
+	static double BBQPizzaChance = 0;
+	static double canadianPizzaChance = 0;
 	
 	static task createCheesePizza(int orderID, double arrivalTime){
 		task plating = new task("Cook", false, true, true, orderID, 30, 1, null,"Plating cheese pizza");
@@ -291,6 +305,16 @@ public class main {
 	
 	//Mains
 	
+	static double chickenTenderChance = 0.2954545455;
+	static double beefBurgerChance = 0.09090909091;
+	static double crispyChickenBurgerChance = 0.04545454545;
+	static double grilledChickenBurgerChance = 0.06818181818;
+	static double grilledWrapChance = 0.02272727273;
+	static double crispyWrapChance = 0.06818181818;
+	static double hotdogChance = 0.1590909091;
+	static double pogoChance = 0.25;
+	
+	
 	static task createChickenTenders(int orderID, double arrivalTime){
 		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating chicken tenders");
 		task removing = new task("Cook", true, false, false, orderID, 3, 1, plating,"Removing chicken tenders");
@@ -318,7 +342,7 @@ public class main {
 		task toastingBun = new task("Oven", false, true, true, orderID, 50, 1, removingBun,"Toasting burger bun");
 		task addingBunToOven = new task("Cook", false, true, true, orderID, 15, 1, toastingBun,"Adding burger bun to oven");
 		task removingChicken = new task("Cook", true, true, false, orderID, 10, 1, addingBunToOven,"Removing chicken tenders from fryers");
-		task cookingChicken = new task("Deep Fryer", false, true, true, orderID, 7*60, 1, removingChicken,"Cooking chicken tenders");
+		task cookingChicken = new task("Fryer", false, true, true, orderID, 7*60, 1, removingChicken,"Cooking chicken tenders");
 		task addingChickenToDeepFryer = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime,cookingChicken,"Adding chicken tenders to fryer");
 		return addingChickenToDeepFryer;
 	}
@@ -335,13 +359,23 @@ public class main {
 		return addingChickenToGrill;
 	}
 	
-	/*static task createCrispyWrap(int orderID, double arrivalTime){
-		task plating = new task
+	static task createCrispyWrap(int orderID, double arrivalTime){
+		task plating = new task("Cook", false, true, true, orderID, 5, 1, null,"Plating crispy wrap");
+		task buildingWrap = new task("Cook", false, true, true, orderID, 60, 1, plating,"Building crispy wrap");
+		task removingChicken = new task("Cook", true, true, false, orderID, 10, 1, buildingWrap,"Removing chicken tenders from fryers");
+		task cookingChicken = new task("Fryer", false, true, true, orderID, 7*60, 1, removingChicken,"Cooking chicken tenders");
+		task addingChickenToDeepFryer = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime,cookingChicken,"Adding chicken tenders to fryer");
+		return addingChickenToDeepFryer;
 	}
 	
 	static task createGrilledWrap(int orderID, double arrivalTime){
-		task plating = new task
-	}*/
+        task plating = new task("Cook", false, true, true, orderID, 5, 1, null,"Plating grilled wrap");
+		task buildingWrap = new task("Cook", false, true, true, orderID, 60, 1, plating,"Building grilled wrap");
+		task removingChicken = new task("Cook", true, true, false, orderID, 10, 1, buildingWrap,"Removing chicken from grill");
+		task cookingChicken = new task("Cook Top", false, true, true, orderID, 8*60, 1, removingChicken,"Cooking chicken");
+		task addingChickenToGrill = new task("Cook", false, true, false, orderID, 10, 1, arrivalTime,cookingChicken,"Adding chicken to grill");
+		return addingChickenToGrill;
+	}
 	
 	//Salads (don't distinguish, all take roughly same amount of time and have similar procedure)
 	
@@ -354,10 +388,6 @@ public class main {
 	}
 	
 	//Kids meals
-	
-	static double pogoChance = 1/3;
-	static double hotdogChance = 1/3;
-	static double kidschickenTenderChance = 1/3;
 	
 	static task createPogo(int orderID, double arrivalTime){
 		task plating = new task("Cook", false, true, true, orderID, 10, 1, null,"Plating pogo");
