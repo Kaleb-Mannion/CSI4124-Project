@@ -8,6 +8,7 @@ public class Cook{
 	int noOvens;//number of ovens available
 	int noFryers;//number of fryers available
 	boolean isBusy;//if the cook is busy themselves
+	boolean advancedTime;
 	ArrayList<Integer> seenVariables = new ArrayList<>();
 	ArrayList<Double> orderStart = new ArrayList<>(); ArrayList<Double> orderEnd = new ArrayList<>();
 	
@@ -28,10 +29,12 @@ public class Cook{
 		noOvens = t_noOvens;
 		noFryers = t_noFryers;
 		isBusy = false;
+		advancedTime = false;
 		futureResourceList = new LinkedList<>();
 	}
 
 	double nextEvent(LinkedList<task> taskList, LinkedList<task> futureTaskList, double currentTime){//cook checks to see if they are able to start any new tasks with the resources available
+		advancedTime = false;
 		ListIterator<task> i = taskList.listIterator(0);//iterator for the available tasks
 		while(i.hasNext()){//as interrupts have priority we search for any new ones and deal with them
 			task currentTask = i.next();
@@ -51,7 +54,9 @@ public class Cook{
 					soonestResource = resourceInUse;
 				}
 			}
-			currentTime = soonestResource.arrivalTime;
+			if(soonestResource != null){
+    			currentTime = soonestResource.arrivalTime;
+    		}
 		}
 		j = futureResourceList.listIterator(0);//iterator for the tools in use
 		while(j.hasNext()){//after all the interrupts have been cleared, we can guarantee the resources they were using are no free, so we add the freed resources
@@ -76,7 +81,17 @@ public class Cook{
 		i = taskList.listIterator(0);//iterator for the available tasks
 		while(i.hasNext()){//for each item in the queue that isnt an interrupt, serve the first one the tools are available for 
 			task currentTask = i.next();
-			if(currentTask.resource == "Oven" && noOvens > 0 || currentTask.resource == "Fryer" && noFryers > 0 || currentTask.resource == "Cook Top" && noCookTops > 0 || currentTask.resource == "Cook" && !isBusy){
+			if(currentTask.resource == "Oven" && noOvens > 0 || currentTask.resource == "Fryer" && noFryers > 0 || currentTask.resource == "Cook Top" && noCookTops > 0){// || currentTask.resource == "Cook" && !isBusy){
+				//check if the task uses a resource and if the resource is available
+				currentTime = doTask(currentTask,futureTaskList, currentTime);//do the task if the resource is available
+				taskList.remove(currentTask);//remove the task from the task list
+				return currentTime;//return to the main routine with the new time
+			}	
+		}
+		i = taskList.listIterator(0);
+		while(i.hasNext()){//for each item in the queue that isnt an interrupt, serve the first one the tools are available for 
+			task currentTask = i.next();
+			if(currentTask.resource == "Cook" && isBusy == false){
 				//check if the task uses a resource and if the resource is available
 				currentTime = doTask(currentTask,futureTaskList, currentTime);//do the task if the resource is available
 				taskList.remove(currentTask);//remove the task from the task list
@@ -149,15 +164,30 @@ public class Cook{
 			}			
 			futureResourceList.add(new resource(currentTask.resource, currentTask.completionTime));//when a resource is done being used, schedule it to return to the pool of available resources
 		} 
-		if (!currentTask.isInterruptable){//if the current task cannot be interrupted
+		if (currentTask.isInterruptable == false && currentTask.resource == "Cook"){//if the current task cannot be interrupted and its the cook
 			currentTime = currentTask.completionTime;//jump to the time where it is completed
 			ListIterator<task> i = futureTaskList.listIterator(0);
-			while(i.hasNext()){;//for each task in the future task list, push back the ones with a predecessor that relies on the cook(i.e if the cook works on the predecessor step)
+			while(i.hasNext()){//for each task in the future task list, push back the ones with a predecessor that relies on the cook(i.e if the cook works on the predecessor step)
 				task futureTask = i.next();
 				if(futureTask.affectedByInterrupts){
 					futureTask.arrivalTime += timeLength;//add the length of the interruption to the arrival time of tasks affected by interruptions
 				}
 			}
+		}else if(currentTask.resource == "Cook"){
+		    ListIterator<task> i = futureTaskList.listIterator(0);
+	        task soonestInterrupt = null;
+		    while(i.hasNext()){
+		        task futureTask = i.next();
+		        if(soonestInterrupt == null || futureTask.isInterrupt && futureTask.arrivalTime < soonestInterrupt.arrivalTime){
+		            soonestInterrupt = futureTask;
+		        }
+		    }
+		    if(soonestInterrupt != null && soonestInterrupt.arrivalTime < currentTask.completionTime){
+		        currentTime = soonestInterrupt.arrivalTime;   
+		    }else{
+		        currentTime = currentTask.completionTime;
+		        advancedTime = true;
+		    }
 		}
 		return currentTime;
 	}	
